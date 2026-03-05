@@ -4,306 +4,157 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Building a Parental Leave Policy in the US</title>
+
+  <!-- OG / Social Preview -->
+  <meta property="og:title" content="Building a Parental Leave Policy in the US" />
+  <meta property="og:description" content="A guide for People & HR teams at US-based companies" />
+  <meta property="og:image" content="https://therealjmum.github.io/us-parental-leave/og-preview.png" />
+  <meta property="og:url" content="https://therealjmum.github.io/us-parental-leave/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://therealjmum.github.io/us-parental-leave/og-preview.png" />
+
   <style>
-    /* ── Notion-inspired design tokens ─────────────────────── */
+    /* ── Design Tokens ── */
     :root {
-      --bg:           #FFFFFF;
-      --bg-warm:      #F7F6F3;
-      --bg-sidebar:   #FBFAF8;
-      --text:         #37352F;
-      --text-muted:   #787774;
-      --text-light:   #AFACAA;
-      --border:       #E9E8E4;
-      --border-dark:  #D3D1CB;
-      --blue:         #2F80ED;
-      --blue-bg:      #EAF3FF;
-      --blue-dark:    #1A5FB4;
-      --teal:         #0F7488;
-      --teal-bg:      #E4F6F8;
-      --green:        #448361;
-      --green-bg:     #EEF6F1;
-      --orange:       #D9730D;
-      --orange-bg:    #FDF0E4;
-      --red:          #C83532;
-      --red-bg:       #FBE9E9;
-      --purple:       #6940A5;
-      --purple-bg:    #F3EEFF;
-      --yellow:       #CB912F;
-      --yellow-bg:    #FFF8E7;
-      --tag-radius:   4px;
-      --card-radius:  8px;
-      --font:         -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      --bg: #FFFFFF;
+      --bg-warm: #F7F6F3;
+      --bg-hover: #F1F0EC;
+      --text: #37352F;
+      --text-muted: #787774;
+      --border: #E9E8E4;
+      --blue: #2F80ED;
+      --blue-bg: #EBF3FD;
+      --orange: #D9730D;
+      --orange-bg: #FDF0E6;
+      --green: #448361;
+      --green-bg: #EDF3F0;
+      --purple: #6940A5;
+      --purple-bg: #F4F0F9;
+      --red: #C83532;
+      --red-bg: #FDEBEB;
+      --teal: #0F7488;
+      --teal-bg: #E7F3F5;
+      --yellow: #CB912F;
+      --yellow-bg: #FBF3E3;
+      --sidebar-w: 240px;
+      --radius: 6px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
       font-size: 15px;
       line-height: 1.6;
-    }
-
-    /* ── Layout ─────────────────────────────────────────────── */
-    .page-wrapper {
+      color: var(--text);
+      background: var(--bg);
       display: flex;
-      min-height: 100vh;
     }
 
-    /* ── Sidebar / TOC ──────────────────────────────────────── */
+    /* ── Sidebar ── */
     .sidebar {
-      width: 240px;
-      flex-shrink: 0;
-      background: var(--bg-sidebar);
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--bg-warm);
       border-right: 1px solid var(--border);
-      padding: 32px 0;
       position: sticky;
       top: 0;
       height: 100vh;
       overflow-y: auto;
+      padding: 32px 0 40px;
+      flex-shrink: 0;
     }
 
-    .sidebar-logo {
-      padding: 0 16px 24px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 16px;
-    }
-
-    .sidebar-logo .logo-text {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .logo-icon {
-      width: 24px;
-      height: 24px;
-      background: var(--text);
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .sidebar-section {
-      padding: 4px 8px;
+    .sidebar-title {
       font-size: 11px;
       font-weight: 600;
-      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      margin: 8px 8px 2px;
+      color: var(--text-muted);
+      padding: 0 20px 12px;
     }
 
     .sidebar a {
       display: block;
-      padding: 5px 16px;
+      padding: 6px 20px;
       font-size: 13.5px;
       color: var(--text-muted);
       text-decoration: none;
       border-radius: 4px;
-      margin: 0 8px;
-      transition: background 0.1s, color 0.1s;
-      line-height: 1.4;
+      margin: 1px 8px;
+      transition: background 0.15s, color 0.15s;
     }
 
-    .sidebar a:hover {
-      background: var(--border);
-      color: var(--text);
-    }
+    .sidebar a:hover { background: var(--bg-hover); color: var(--text); }
+    .sidebar a.active { background: var(--bg-hover); color: var(--text); font-weight: 500; }
 
-    .sidebar a.active {
-      background: var(--border);
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    /* ── Main content ───────────────────────────────────────── */
-    .content {
+    /* ── Main ── */
+    .main {
       flex: 1;
       max-width: 860px;
-      padding: 64px 80px 120px;
-      min-width: 0;
+      padding: 48px 56px 80px;
     }
 
-    /* ── Hero ───────────────────────────────────────────────── */
-    .hero {
-      margin-bottom: 48px;
-    }
-
-    .hero-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--blue-bg);
-      color: var(--blue-dark);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-      letter-spacing: 0.03em;
-    }
-
-    .hero h1 {
-      font-size: 36px;
+    .page-title {
+      font-size: 32px;
       font-weight: 700;
-      line-height: 1.2;
-      color: var(--text);
-      margin-bottom: 16px;
       letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 8px;
     }
 
-    .hero-meta {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+    .page-subtitle {
+      font-size: 15px;
       color: var(--text-muted);
-      font-size: 13px;
-      padding-bottom: 24px;
+      margin-bottom: 40px;
+    }
+
+    /* ── Sections ── */
+    .section { margin-bottom: 56px; scroll-margin-top: 24px; }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
       border-bottom: 1px solid var(--border);
     }
 
-    .hero-meta span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
+    h3 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; }
 
-    .hero-intro {
-      margin-top: 24px;
-      font-size: 16px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      max-width: 640px;
-    }
+    p { margin-bottom: 12px; }
 
-    /* ── Sections ───────────────────────────────────────────── */
-    .section {
-      margin-bottom: 56px;
-      scroll-margin-top: 24px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .section-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-
-    h2 {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: -0.01em;
-    }
-
-    h3 {
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: var(--text);
-      margin-bottom: 12px;
-      line-height: 1.7;
-    }
-
-    /* ── Stat Cards ─────────────────────────────────────────── */
+    /* ── Stat Grid ── */
     .stat-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .stat-card {
       background: var(--bg-warm);
       border: 1px solid var(--border);
-      border-radius: var(--card-radius);
-      padding: 18px 20px;
+      border-radius: var(--radius);
+      padding: 16px 18px;
     }
 
     .stat-card .stat-num {
       font-size: 28px;
       font-weight: 700;
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .stat-card .stat-label {
-      font-size: 12.5px;
+      font-size: 12px;
       color: var(--text-muted);
       line-height: 1.4;
     }
 
-    .stat-card .stat-source {
-      font-size: 11px;
-      color: var(--text-light);
-      margin-top: 8px;
-    }
-
-    .stat-blue  { border-top: 3px solid var(--blue);   }
-    .stat-green { border-top: 3px solid var(--green);  }
-    .stat-orange{ border-top: 3px solid var(--orange); }
-    .stat-purple{ border-top: 3px solid var(--purple); }
-    .stat-teal  { border-top: 3px solid var(--teal);   }
-
-    .stat-blue  .stat-num { color: var(--blue); }
-    .stat-green .stat-num { color: var(--green); }
-    .stat-orange .stat-num { color: var(--orange); }
-    .stat-purple .stat-num { color: var(--purple); }
-    .stat-teal  .stat-num { color: var(--teal); }
-
-    /* ── Info Callouts ──────────────────────────────────────── */
-    .callout {
-      border-radius: var(--card-radius);
-      padding: 16px 18px;
-      margin-bottom: 16px;
-      display: flex;
-      gap: 12px;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-    .callout p { margin: 0; }
-
-    .callout-blue   { background: var(--blue-bg);   border-left: 3px solid var(--blue);   }
-    .callout-green  { background: var(--green-bg);  border-left: 3px solid var(--green);  }
-    .callout-orange { background: var(--orange-bg); border-left: 3px solid var(--orange); }
-    .callout-red    { background: var(--red-bg);    border-left: 3px solid var(--red);    }
-    .callout-purple { background: var(--purple-bg); border-left: 3px solid var(--purple); }
-    .callout-yellow { background: var(--yellow-bg); border-left: 3px solid var(--yellow); }
-
-    /* ── Tables ─────────────────────────────────────────────── */
-    .table-wrap {
-      overflow-x: auto;
-      border-radius: var(--card-radius);
-      border: 1px solid var(--border);
-      margin-bottom: 16px;
-    }
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin-bottom: 20px; }
 
     table {
       width: 100%;
@@ -311,1054 +162,872 @@
       font-size: 13.5px;
     }
 
-    thead th {
+    th {
       background: var(--bg-warm);
-      padding: 10px 14px;
-      text-align: left;
       font-weight: 600;
       font-size: 12px;
-      color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      border-bottom: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      text-align: left;
     }
 
-    tbody td {
-      padding: 10px 14px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
+    td {
+      padding: 10px 12px;
+      border: 1px solid var(--border);
       vertical-align: top;
     }
 
-    tbody tr:last-child td { border-bottom: none; }
-    tbody tr:hover { background: var(--bg-warm); }
+    tr:hover td { background: var(--bg-warm); }
 
-    /* ── Divider ────────────────────────────────────────────── */
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 32px 0;
-    }
-
-    /* ── Tags ───────────────────────────────────────────────── */
+    /* ── Tags ── */
     .tag {
       display: inline-block;
       padding: 2px 8px;
       border-radius: 4px;
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 500;
     }
 
-    .tag-blue   { background: var(--blue-bg);   color: var(--blue-dark); }
-    .tag-green  { background: var(--green-bg);  color: var(--green);     }
-    .tag-orange { background: var(--orange-bg); color: var(--orange);    }
-    .tag-red    { background: var(--red-bg);    color: var(--red);       }
-    .tag-purple { background: var(--purple-bg); color: var(--purple);    }
+    .tag-blue   { background: var(--blue-bg);   color: var(--blue); }
+    .tag-orange { background: var(--orange-bg);  color: var(--orange); }
+    .tag-green  { background: var(--green-bg);   color: var(--green); }
+    .tag-purple { background: var(--purple-bg);  color: var(--purple); }
+    .tag-red    { background: var(--red-bg);     color: var(--red); }
+    .tag-teal   { background: var(--teal-bg);    color: var(--teal); }
+    .tag-yellow { background: var(--yellow-bg);  color: var(--yellow); }
 
-    /* ── Size Cards ─────────────────────────────────────────── */
+    /* ── Callouts ── */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: var(--radius);
+      margin-bottom: 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+
+    .callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .callout-blue   { background: var(--blue-bg);   border-left: 3px solid var(--blue); }
+    .callout-orange { background: var(--orange-bg); border-left: 3px solid var(--orange); }
+    .callout-green  { background: var(--green-bg);  border-left: 3px solid var(--green); }
+    .callout-yellow { background: var(--yellow-bg); border-left: 3px solid var(--yellow); }
+    .callout-purple { background: var(--purple-bg); border-left: 3px solid var(--purple); }
+    .callout-teal   { background: var(--teal-bg);   border-left: 3px solid var(--teal); }
+
+    /* ── Size Cards ── */
     .size-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
       margin-bottom: 20px;
     }
 
     .size-card {
-      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: var(--card-radius);
-      padding: 20px;
+      border-radius: var(--radius);
+      overflow: hidden;
     }
 
-    .size-card .size-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 11.5px;
+    .size-card-header {
+      padding: 10px 14px;
+      font-size: 13px;
       font-weight: 600;
-      margin-bottom: 12px;
     }
 
-    .size-card h3 { margin-bottom: 12px; }
-
-    .size-card ul {
-      padding-left: 16px;
-      font-size: 13.5px;
-      color: var(--text-muted);
+    .size-card-body {
+      padding: 14px;
+      font-size: 13px;
     }
 
-    .size-card ul li {
-      margin-bottom: 7px;
-      line-height: 1.5;
-    }
+    .size-card-body ul { padding-left: 16px; }
+    .size-card-body li { margin-bottom: 6px; line-height: 1.45; }
 
-    /* ── State Cards ─────────────────────────────────────────── */
+    /* ── State Cards ── */
     .state-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 14px;
       margin-bottom: 20px;
     }
 
     .state-card {
       border: 1px solid var(--border);
-      border-radius: var(--card-radius);
+      border-radius: var(--radius);
       overflow: hidden;
     }
 
     .state-card-header {
-      padding: 12px 16px;
+      padding: 10px 14px;
       font-size: 13px;
       font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .state-card-body {
-      padding: 12px 16px;
+      padding: 14px;
       font-size: 13px;
-      color: var(--text-muted);
     }
 
-    .state-card-body ul {
-      padding-left: 14px;
-    }
+    .state-card-body ul { padding-left: 16px; }
+    .state-card-body li { margin-bottom: 6px; line-height: 1.45; }
 
-    .state-card-body li {
-      margin-bottom: 6px;
-      line-height: 1.5;
-    }
+    /* ── STD Bar Chart ── */
+    .std-chart { margin-bottom: 24px; }
 
-    /* ── Timeline / Steps ───────────────────────────────────── */
-    .steps {
-      position: relative;
-      padding-left: 28px;
-    }
+    .std-row-wrap { margin-bottom: 16px; }
 
-    .steps::before {
-      content: '';
-      position: absolute;
-      left: 10px;
-      top: 8px;
-      bottom: 8px;
-      width: 2px;
-      background: var(--border);
-    }
-
-    .step {
-      position: relative;
-      margin-bottom: 20px;
-    }
-
-    .step::before {
-      content: '';
-      position: absolute;
-      left: -22px;
-      top: 6px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--blue);
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--blue);
-    }
-
-    .step-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 5px;
-    }
-
-    .step-body {
-      font-size: 13.5px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    /* ── Source note ─────────────────────────────────────────── */
-    .source-note {
+    .std-row-label {
       font-size: 12px;
-      color: var(--text-light);
-      border-top: 1px solid var(--border);
-      margin-top: 12px;
-      padding-top: 10px;
-    }
-
-    .source-note a {
-      color: var(--blue);
-      text-decoration: none;
-    }
-
-    /* ── Footer ─────────────────────────────────────────────── */
-    .footer {
-      margin-top: 60px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      font-size: 12.5px;
-      color: var(--text-light);
-    }
-
-    /* ── Responsive ─────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .sidebar { display: none; }
-      .content { padding: 32px 24px 80px; }
-      .hero h1 { font-size: 26px; }
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    /* ── Smooth scroll ──────────────────────────────────────── */
-    html { scroll-behavior: smooth; }
-
-    /* ── STD diagram ─────────────────────────────────────────── */
-    .std-timeline {
-      background: var(--bg-warm);
-      border: 1px solid var(--border);
-      border-radius: var(--card-radius);
-      padding: 20px;
-      margin-bottom: 16px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 5px;
     }
 
     .std-bar-row {
       display: flex;
-      gap: 3px;
-      margin-bottom: 6px;
-      align-items: stretch;
       height: 40px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      gap: 2px;
     }
 
     .std-bar {
-      border-radius: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 600;
-      color: white;
+      color: #fff;
       white-space: nowrap;
-      overflow: hidden;
       padding: 0 8px;
-    }
-
-    .bar-label {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-muted);
-      margin-bottom: 4px;
     }
 
     .std-legend {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 12px;
+      gap: 10px;
+      margin-top: 14px;
+      font-size: 12px;
     }
 
-    .legend-item {
+    .std-legend-item {
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 12px;
-      color: var(--text-muted);
+      gap: 5px;
     }
 
-    .legend-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
+    .std-legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
       flex-shrink: 0;
+    }
+
+    /* ── Compliance Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+
+    .step {
+      display: flex;
+      gap: 14px;
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--text);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-content { flex: 1; font-size: 13.5px; }
+    .step-content strong { display: block; margin-bottom: 3px; }
+
+    .owner-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .owner-employer { background: var(--blue-bg); color: var(--blue); }
+    .owner-employee { background: var(--green-bg); color: var(--green); }
+    .owner-both     { background: var(--purple-bg); color: var(--purple); }
+
+    .link-pill {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      font-size: 11.5px;
+      font-weight: 500;
+      text-decoration: none;
+      border: 1px solid currentColor;
+      margin-right: 6px;
+    }
+
+    /* ── Sources Table ── */
+    .sources-table td:first-child { font-weight: 500; width: 180px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 28px 20px 60px; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .size-grid { grid-template-columns: 1fr; }
+      .state-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<div class="page-wrapper">
+<!-- ── Sidebar ── -->
+<nav class="sidebar">
+  <div class="sidebar-title">Contents</div>
+  <a href="#benchmarks">📊 Benchmarking</a>
+  <a href="#size">🏢 Company Size</a>
+  <a href="#states">🗺️ State Nuances</a>
+  <a href="#std">🛡️ STD Insurance</a>
+  <a href="#protections">⚖️ Job Protections</a>
+  <a href="#compliance">✅ SF Compliance</a>
+  <a href="#sources">📚 Sources</a>
+</nav>
 
-  <!-- ── Sidebar ──────────────────────────────────────────── -->
-  <nav class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-text">
-        <span class="logo-icon">👶</span>
-        Parental Leave Guide
+<!-- ── Main ── -->
+<main class="main">
+  <h1 class="page-title">Building a Parental Leave Policy in the US</h1>
+  <p class="page-subtitle">A practical guide for People & HR teams — covering benchmarks, state law, STD insurance, and compliance.</p>
+
+  <!-- ══ 1. BENCHMARKING ══ -->
+  <section class="section" id="benchmarks">
+    <h2>📊 Benchmarking</h2>
+
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-num" style="color: var(--blue);">16 wks</div>
+        <div class="stat-label">Median birthing parent leave at VC-backed companies (Cocoon 2023)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color: var(--green);">12 wks</div>
+        <div class="stat-label">Median non-birthing parent leave at VC-backed companies (Cocoon 2023)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="color: var(--orange);">~42%</div>
+        <div class="stat-label">US private-sector workers with access to any paid family leave (BLS direction: less common at smaller employers)</div>
       </div>
     </div>
 
-    <div class="sidebar-section">Overview</div>
-    <a href="#benchmarks">📊 2025–26 Benchmarks</a>
-
-    <div class="sidebar-section">By Company</div>
-    <a href="#by-size">🏢 Company Size & Stage</a>
-
-    <div class="sidebar-section">Compliance</div>
-    <a href="#state">🗺️ State Nuances</a>
-    <a href="#std">🏥 Short-Term Disability</a>
-    <a href="#job-protection">🔒 Job Protections</a>
-    <a href="#sf-compliance">✅ Compliance Steps (SF)</a>
-
-    <div class="sidebar-section">Resources</div>
-    <a href="#sources">🔗 Sources</a>
-  </nav>
-
-  <!-- ── Main ─────────────────────────────────────────────── -->
-  <main class="content">
-
-    <!-- HERO -->
-    <div class="hero">
-      <div class="hero-eyebrow">
-        ✦ HR Policy Guide · 2025–2026
-      </div>
-      <h1>Building a Parental Leave Policy in the US</h1>
-      <div class="hero-meta">
-        <span>👶 All company sizes</span>
-        <span>🗺️ US-focused, state nuances included</span>
-        <span>📅 Updated March 2026</span>
-      </div>
-      <p class="hero-intro">
-        Parental leave is one of the highest-signal benefits you can offer — for recruiting, retention, and culture. This guide covers what the data actually says, what compliance requires, and how to design a policy that works for your company size and location.
-      </p>
+    <div class="callout callout-blue">
+      <span class="callout-icon">💡</span>
+      <div>theSkimm's <strong>#ShowUsYourLeave</strong> research found that even companies with strong written policies often fall short on manager training, return-to-work support, and culture. Policy language is just the start.</div>
     </div>
 
-    <!-- ── SECTION 1: Benchmarks ─────────────────────────── -->
-    <div class="section" id="benchmarks">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--blue-bg);">📊</div>
-        <h2>2025–26 Market Benchmarks</h2>
-      </div>
+    <h3>VC-Backed Companies — Leave by Stage</h3>
+    <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 10px;">Source: Cocoon 2023 State of Parental Leave report. All figures are medians for fully-paid weeks.</p>
 
-      <p>The best benchmarking data available comes from Cocoon's annual analysis of 250+ venture-backed companies, Sequoia's SMB Benefits Benchmarking Report, and broad market data from Great Place to Work. Here's what the numbers say.</p>
-
-      <div class="stat-grid">
-        <div class="stat-card stat-blue">
-          <div class="stat-num">16 wks</div>
-          <div class="stat-label">Median paid leave for <strong>birthing parents</strong> at VC-backed companies</div>
-          <div class="stat-source">Cocoon, Oct 2025 · up 23% since 2021</div>
-        </div>
-        <div class="stat-card stat-green">
-          <div class="stat-num">12 wks</div>
-          <div class="stat-label">Median paid leave for <strong>non-birthing parents</strong> at VC-backed companies</div>
-          <div class="stat-source">Cocoon, Oct 2025 · up 22% since 2021</div>
-        </div>
-        <div class="stat-card stat-orange">
-          <div class="stat-num">12 wks</div>
-          <div class="stat-label"><strong>Most common</strong> birthing parent policy across the market</div>
-          <div class="stat-source">Cocoon 2025 · Bnchmrk 600+ employers</div>
-        </div>
-        <div class="stat-card stat-purple">
-          <div class="stat-num">59%</div>
-          <div class="stat-label">Companies offering <strong>day-one eligibility</strong> for parental leave</div>
-          <div class="stat-source">Cocoon, Oct 2025</div>
-        </div>
-        <div class="stat-card stat-teal">
-          <div class="stat-num">74%</div>
-          <div class="stat-label">SMBs that <strong>structure leave through STD</strong> with employer top-ups</div>
-          <div class="stat-source">Sequoia SMB Benefits Report 2025</div>
-        </div>
-        <div class="stat-card stat-blue">
-          <div class="stat-num">15%</div>
-          <div class="stat-label">SMBs offering <strong>fully employer-paid</strong> leave (no STD dependency)</div>
-          <div class="stat-source">Sequoia SMB Benefits Report 2025</div>
-        </div>
-      </div>
-
-      <div class="callout callout-blue">
-        <span class="callout-icon">📈</span>
-        <div>
-          <p><strong>The trend is stabilizing — but the gap persists.</strong> After rapid post-COVID growth, parental leave weeks have leveled off. Companies are now differentiating by expanding <em>medical leave</em> (up 76% in 2 years to ~6 weeks median) and adding <em>caregiver leave</em> — now offered by 1 in 4 VC-backed companies, per Cocoon 2025.</p>
-        </div>
-      </div>
-
-      <h3 style="margin-top: 20px;">VC-Backed Benchmarks by Stage, vs. Broad Market</h3>
-      <p style="font-size: 13.5px; color: var(--text-muted); margin-bottom: 12px;">Cocoon uses company stage rather than exact headcount; approximate size mappings are shown below. All figures are medians from Cocoon's dataset of 250+ VC-backed companies.</p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Segment</th>
-              <th>Birthing Parent</th>
-              <th>Non-Birthing Parent</th>
-              <th>Policy range</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style="background: var(--bg-warm);">
-              <td colspan="4" style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 14px;">VC-Backed Companies (Cocoon, 2025)</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="tag tag-red">Seed / Very Early</span><br/>
-                <span style="font-size:11.5px; color: var(--text-muted);">&lt;50 FTE · Pre-Seed–Series A</span>
-              </td>
-              <td><strong>6–8 wks</strong> <span style="font-size:11px; color: var(--text-muted);">where offered</span></td>
-              <td><strong>2–4 wks</strong> <span style="font-size:11px; color: var(--text-muted);">where offered</span></td>
-              <td style="font-size:12.5px; color: var(--text-muted);">Based on practitioner examples, not a systematic survey. Many companies at this stage rely on state PFL as the primary wage replacement mechanism and top up minimally, if at all.</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="tag tag-orange">Early Stage</span><br/>
-                <span style="font-size:11.5px; color: var(--text-muted);">~50–150 FTE · Series A–B</span>
-              </td>
-              <td><strong>16 wks</strong></td>
-              <td><strong>12 wks</strong></td>
-              <td style="font-size:12.5px; color: var(--text-muted);">Birthing: 6–26 wks<br/>Non-birthing: 2–26 wks</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="tag tag-blue">Growth Stage</span><br/>
-                <span style="font-size:11.5px; color: var(--text-muted);">~150–500 FTE · Series C–D</span>
-              </td>
-              <td><strong>16 wks</strong></td>
-              <td><strong>12 wks</strong></td>
-              <td style="font-size:12.5px; color: var(--text-muted);">Birthing: 6–28 wks<br/>Non-birthing: 4–26 wks</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="tag tag-green">Late Stage / Public</span><br/>
-                <span style="font-size:11.5px; color: var(--text-muted);">~500+ FTE · Pre-IPO–Public</span>
-              </td>
-              <td><strong>18 wks</strong></td>
-              <td><strong>12 wks</strong></td>
-              <td style="font-size:12.5px; color: var(--text-muted);">Birthing: 4–28 wks<br/>Non-birthing: 2–18 wks</td>
-            </tr>
-            <tr style="background: var(--bg-warm);">
-              <td colspan="4" style="font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 14px;">Broad Market for Comparison (Bnchmrk, 600+ all-sector employers)</td>
-            </tr>
-            <tr>
-              <td>
-                <span class="tag tag-purple">All employers</span><br/>
-                <span style="font-size:11.5px; color: var(--text-muted);">Includes non-tech; all sizes</span>
-              </td>
-              <td><strong>11–12 wks</strong></td>
-              <td><strong>6–7 wks</strong></td>
-              <td style="font-size:12.5px; color: var(--text-muted);">Significantly lower than VC-backed; reflects broader employer mix</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="callout callout-green">
-        <span class="callout-icon">🌱</span>
-        <div>
-          <p><strong>A note on affordability:</strong> These benchmarks reflect where the market is — not where every company needs to start. The most important thing is to put something real in place and build on it over time. A genuine 8-week policy today is more valuable than a 16-week aspiration that never gets implemented. Design for what's financially sustainable now, with a clear intent to expand as the company grows.</p>
-        </div>
-      </div>
-      <p class="source-note">Sources: <a href="https://www.cocoon.com/blog/paid-leave-benchmarks-2024" target="_blank">Cocoon Paid Leave Benchmarks 2023–2025</a> (VC-backed rows) · <a href="https://www.bnchmrk.com/pto-benchmarks" target="_blank">Bnchmrk 600+ employer survey</a> (broad market row) · Seed/Very Early row based on practitioner examples</p>
-
-      <div class="callout callout-orange">
-        <span class="callout-icon">💡</span>
-        <div>
-          <p><strong>Retention impact:</strong> Employers who offer paid parental leave see median employee tenure 20% longer than those who don't. Just 12 weeks of leave can reduce first-time mother turnover by up to 70%, eliminating re-hiring costs that average 1–1.5× an employee's annual salary.</p>
-        </div>
-      </div>
-
-      <div class="callout callout-purple">
-        <span class="callout-icon">⚖️</span>
-        <div>
-          <p><strong>Equal leave is growing but not yet the norm:</strong> theSkimm's #ShowUsYourLeave database (500+ employers, Q1 2025) found that only <strong>47% of companies</strong> offer equal maternity and paternity leave weeks. Healthcare (63%), Nonprofit (51%), and Retail (41%) lead on parity. See <a href="#sources" style="color: var(--blue);">Sources</a> for the full database.</p>
-        </div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Stage / Size</th>
+            <th>Birthing Parent</th>
+            <th>Non-Birthing Parent</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="tag tag-red">Seed / Very Early</span><br/>
+              <span style="font-size:11.5px; color: var(--text-muted);">&lt;50 FTE · Pre-Seed–Series A</span>
+            </td>
+            <td><strong>6–8 wks</strong> <span style="font-size:11px; color:var(--text-muted);">where offered</span></td>
+            <td><strong>2–4 wks</strong> <span style="font-size:11px; color:var(--text-muted);">where offered</span></td>
+            <td style="font-size:12px; color:var(--text-muted);">Based on practitioner examples, not a systematic survey. Many early-stage companies have no formal policy yet.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="tag tag-orange">Early Stage</span><br/>
+              <span style="font-size:11.5px; color: var(--text-muted);">~50–150 FTE · Series A–B</span>
+            </td>
+            <td><strong>16 wks</strong></td>
+            <td><strong>12 wks</strong></td>
+            <td style="font-size:12px; color:var(--text-muted);">Cocoon 2023 overall VC median. Size-specific breakdowns not published separately.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="tag tag-blue">Growth Stage</span><br/>
+              <span style="font-size:11.5px; color: var(--text-muted);">~150–500 FTE · Series B–D</span>
+            </td>
+            <td><strong>16 wks</strong></td>
+            <td><strong>12 wks</strong></td>
+            <td style="font-size:12px; color:var(--text-muted);">Consistent with overall VC median.</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="tag tag-green">Late Stage / Public</span><br/>
+              <span style="font-size:11.5px; color: var(--text-muted);">~500+ FTE · Series E+</span>
+            </td>
+            <td><strong>18 wks</strong></td>
+            <td><strong>12 wks</strong></td>
+            <td style="font-size:12px; color:var(--text-muted);">Larger companies trend slightly higher on birthing leave. Source: Cocoon / Bnchmrk.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="divider"></div>
+    <div class="callout callout-orange">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>Affordability context:</strong> These benchmarks reflect what well-funded VC-backed companies offer. Early-stage companies should aim to build toward these numbers over time — starting with what's sustainable and expanding as the business grows. A modest but clearly communicated policy is better than no policy.</div>
+    </div>
 
-    <!-- ── SECTION 3: By Size ─────────────────────────────── -->
-    <div class="section" id="by-size">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--green-bg);">🏢</div>
-        <h2>Policy Design by Company Size &amp; Stage</h2>
-      </div>
+    <h3>Broad Market Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Employer Type</th>
+            <th>Birthing Parent</th>
+            <th>Non-Birthing Parent</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>VC-Backed Tech (all sizes)</td>
+            <td><strong>16 wks</strong></td>
+            <td><strong>12 wks</strong></td>
+            <td style="font-size:12px; color:var(--text-muted);">Cocoon 2023 median</td>
+          </tr>
+          <tr>
+            <td>Large Employer (&gt;500, broad market)</td>
+            <td><strong>8–12 wks</strong></td>
+            <td><strong>4–6 wks</strong></td>
+            <td style="font-size:12px; color:var(--text-muted);">Sequoia SMB 2025 / general market data</td>
+          </tr>
+          <tr>
+            <td>SMB (&lt;100 employees, broad market)</td>
+            <td><strong>4–6 wks</strong></td>
+            <td><strong>1–2 wks</strong></td>
+            <td style="font-size:12px; color:var(--text-muted);">Paid leave far less common; many rely on STD only</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-      <p>What's right for a 20-person seed-stage startup is different from a 500-person Series C. Here's how to think about it at each stage — with practical benchmarks and tradeoffs.</p>
+  <!-- ══ 2. COMPANY SIZE ══ -->
+  <section class="section" id="size">
+    <h2>🏢 Considerations by Company Size</h2>
 
-      <div class="size-grid">
-        <!-- Under 100 -->
-        <div class="size-card">
-          <span class="size-badge" style="background: var(--orange-bg); color: var(--orange);">Under 100 FTE</span>
-          <h3>Seed / Series A–B</h3>
+    <div class="size-grid">
+      <div class="size-card">
+        <div class="size-card-header" style="background: var(--red-bg); color: var(--red);">Under 100 FTE</div>
+        <div class="size-card-body">
           <ul>
-            <li>Paid leave is far less common at this size — offering a real policy is a genuine talent differentiator</li>
-            <li>Practical range: <strong>~12 weeks</strong> for birthing parents; <strong>8–12 weeks</strong> for non-birthing is competitive at this stage</li>
-            <li>Use <strong>STD + employer top-up</strong> to make leave affordable (see STD section)</li>
-            <li>Intermittent leave can help with coverage (e.g., take leave in chunks vs. all at once)</li>
-            <li>91% of small businesses offering paid leave report <strong>no noticeable effect</strong> on performance or profitability</li>
-            <li>Consider day-one eligibility to avoid penalizing newer hires</li>
-            <li>State PFL programs (CA, NY, etc.) significantly offset cost</li>
+            <li>FMLA does <strong>not</strong> apply (threshold is 50+ employees)</li>
+            <li>State laws may still apply (CA, NY, WA etc.)</li>
+            <li>STD insurance is the most cost-effective way to fund leave</li>
+            <li>Set a simple, written policy even if modest — clarity reduces risk</li>
+            <li>Budget for backfill or coverage costs</li>
+            <li>Consider a "build over time" philosophy — start at 8 wks and grow</li>
           </ul>
         </div>
-
-        <!-- 100–500 -->
-        <div class="size-card">
-          <span class="size-badge" style="background: var(--blue-bg); color: var(--blue-dark);">100–500 FTE</span>
-          <h3>Series B–D / Growth Stage</h3>
+      </div>
+      <div class="size-card">
+        <div class="size-card-header" style="background: var(--orange-bg); color: var(--orange);">100–500 FTE</div>
+        <div class="size-card-body">
           <ul>
-            <li>FMLA coverage kicks in at 50 employees — compliance becomes non-negotiable</li>
-            <li>Benchmark toward <strong>12–16 weeks</strong> birthing parent; <strong>8–12 weeks</strong> non-birthing</li>
-            <li>Consider equalizing parent types — it removes legal ambiguity and sends a culture signal</li>
-            <li>Add explicit adoption and foster care parity (often overlooked)</li>
-            <li>Introduce a <strong>transition back to work</strong> provision (e.g., reduced schedule for 2–4 weeks post-leave)</li>
-            <li>Document policy clearly — HR handbook, offer letter language, intranet</li>
-            <li>Begin tracking leave utilization by gender to catch uptake imbalances</li>
+            <li>FMLA applies at 50+ employees — ensure compliance</li>
+            <li>Consider dedicated leave administration (Cocoon, Sparrow, etc.)</li>
+            <li>Aim for 12–16 wks birthing, 8–12 wks non-birthing</li>
+            <li>Coordinate STD + company top-up clearly in policy docs</li>
+            <li>Train managers on leave conversations and return-to-work</li>
+            <li>Review state-specific obligations as headcount grows</li>
           </ul>
         </div>
-
-        <!-- 500+ -->
-        <div class="size-card">
-          <span class="size-badge" style="background: var(--green-bg); color: var(--green);">500+ FTE</span>
-          <h3>Late Stage / Pre-IPO / Public</h3>
+      </div>
+      <div class="size-card">
+        <div class="size-card-header" style="background: var(--green-bg); color: var(--green);">500+ FTE</div>
+        <div class="size-card-body">
           <ul>
-            <li>Competitive threshold is <strong>16+ weeks</strong> birthing parent; <strong>12+ weeks</strong> non-birthing to attract top talent</li>
-            <li>Consider fully employer-funded leave (only 15% of SMBs do this — it's a real differentiator)</li>
-            <li>Manage multi-state complexity: different state PFL laws stack differently</li>
-            <li>Invest in <strong>leave administration software</strong> (Cocoon, Sparrow, Tilt) to reduce HR burden</li>
-            <li>Add caregiver leave — now offered by 1 in 4 VC-backed companies</li>
-            <li>Consider a formal manager training program on leave transitions</li>
-            <li>Audit for pay equity during leave periods (ensure bonus proration is fair)</li>
+            <li>Competitive bar is 16–20 wks birthing, 12 wks non-birthing</li>
+            <li>Dedicated leave ops or vendor essential at this scale</li>
+            <li>Audit equity across roles, geographies, and parental types</li>
+            <li>Return-to-work programs and phased re-entry are expected</li>
+            <li>Global considerations if operating internationally</li>
+            <li>Consider fertility, adoption, and loss benefits as part of suite</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3. STATE NUANCES ══ -->
+  <section class="section" id="states">
+    <h2>🗺️ State Law Nuances</h2>
+
+    <div class="state-grid">
+      <!-- California -->
+      <div class="state-card">
+        <div class="state-card-header" style="background: var(--blue-bg); color: var(--blue);">
+          🌴 California
+        </div>
+        <div class="state-card-body">
+          <ul>
+            <li><strong>SDI (State Disability Insurance):</strong> Covers pregnancy/birth — up to <strong>52 weeks</strong> disability; typically 60–70% wage replacement (up to 1,620/wk in 2025)</li>
+            <li><strong>CA PFL:</strong> Up to <strong>8 weeks</strong> bonding leave at 60–70% wages (paid by state)</li>
+            <li><strong>CFRA:</strong> Up to 12 weeks <em>job-protected</em> unpaid leave (applies at 5+ employees in CA)</li>
+            <li><strong>PDL:</strong> Pregnancy disability leave — up to 4 months, separate from CFRA</li>
+            <li>Employer policy stacks on top of state benefits</li>
           </ul>
         </div>
       </div>
 
-      <div class="callout callout-green">
-        <span class="callout-icon">💰</span>
-        <div>
-          <p><strong>Cost reality for small companies:</strong> For a company with 20 employees, the expected leave event is roughly once every 1–2 years. With state PFL programs covering 60–90% of wages for up to 12 weeks, employer top-up cost for one leave event can be under $5,000 — far less than replacing an employee.</p>
+      <!-- SF PPLO -->
+      <div class="state-card">
+        <div class="state-card-header" style="background: var(--teal-bg); color: var(--teal);">
+          🌉 San Francisco (PPLO)
+        </div>
+        <div class="state-card-body">
+          <ul>
+            <li><strong>SF PPLO</strong> requires employers with 20+ employees to <em>supplement</em> CA PFL to 100% of salary</li>
+            <li>Cap: <strong>$2,700/week</strong> employer top-up</li>
+            <li>Applies to bonding leave (not SDI disability period)</li>
+            <li>Duration: up to <strong>8 weeks</strong> of supplementation</li>
+            <li>Runs <em>concurrently</em> with CA PFL — employer pays the gap</li>
+            <li>Applies to employees working in SF, not just HQ'd there</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- New York -->
+      <div class="state-card">
+        <div class="state-card-header" style="background: var(--purple-bg); color: var(--purple);">
+          🗽 New York
+        </div>
+        <div class="state-card-body">
+          <ul>
+            <li><strong>NY PFL:</strong> Up to <strong>12 weeks</strong> job-protected paid leave; applies to all employers</li>
+            <li>Wage replacement: <strong>67% of average weekly wage</strong>, capped at 67% of NY SAWW</li>
+            <li>2025 max benefit: <strong>$1,177.32/week</strong></li>
+            <li>Employee-funded via payroll deduction (2025 rate: 0.388%, max $354.53/yr)</li>
+            <li>Eligible after 20+ hrs/week for 26 consecutive weeks</li>
+            <li>Employers must maintain health benefits during leave</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Other States -->
+      <div class="state-card">
+        <div class="state-card-header" style="background: var(--purple-bg); color: var(--purple);">
+          🗺️ Other States with PFL Laws
+        </div>
+        <div class="state-card-body">
+          <ul>
+            <li>All have mandatory paid family leave programs:
+              <span style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
+                <a href="https://famli.colorado.gov/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Colorado →</a>
+                <a href="https://ctpaidleave.org/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Connecticut →</a>
+                <a href="https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-overview-and-benefits" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Massachusetts →</a>
+                <a href="https://www.myleavebenefits.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">New Jersey →</a>
+                <a href="https://paidleave.oregon.gov/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Oregon →</a>
+                <a href="https://dlt.ri.gov/individuals/temporary-disability-caregiver-insurance" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Rhode Island →</a>
+                <a href="https://paidleave.wa.gov/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Washington →</a>
+                <a href="https://does.dc.gov/page/dc-paid-family-leave" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">DC →</a>
+              </span>
+            </li>
+            <li>Benefits vary: typically 60–90% wage replacement for 6–16 weeks</li>
+            <li>Most are employee-funded (or shared employer/employee); cost to employer is coordination, not necessarily cash</li>
+            <li>Remaining 39 states: employer policy is the <em>only</em> paid leave available — set your bar accordingly</li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <div class="divider"></div>
-
-    <!-- ── SECTION 4: State Nuances ──────────────────────── -->
-    <div class="section" id="state">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--yellow-bg);">🗺️</div>
-        <h2>State Nuances: CA, SF, NY &amp; Beyond</h2>
-      </div>
-
-      <p>State and local laws create a patchwork of requirements — and opportunities. Employees in CA, NY, and a handful of other states have access to state-funded wage replacement that your employer policy can supplement (rather than replace entirely). Understanding what your state offers helps you design a smarter, more cost-efficient policy.</p>
-
-      <div class="state-grid">
-        <!-- California -->
-        <div class="state-card">
-          <div class="state-card-header" style="background: var(--blue-bg); color: var(--blue-dark);">
-            🌴 California (Statewide)
-          </div>
-          <div class="state-card-body">
-            <ul>
-              <li><strong>PDL</strong> (Pregnancy Disability Leave): Up to <strong>4 months</strong> for employees disabled by pregnancy; covers employers with 5+ employees</li>
-              <li><strong>CFRA</strong> (CA Family Rights Act): Up to <strong>12 weeks</strong> job-protected bonding leave; applies to employers with 5+ employees (vs. FMLA's 50+)</li>
-              <li><strong>Key win:</strong> PDL and CFRA do <em>not</em> run concurrently — a birthing parent can take PDL first, then 12 weeks of CFRA. Potential total: <strong>~28 weeks</strong> job-protected</li>
-              <li><strong>CA PFL (SDI):</strong> State-funded, ~60–70% wage replacement for up to <strong>8 weeks</strong> bonding leave; employee-paid via payroll deduction</li>
-              <li>Employers with 5+ employees must maintain health benefits during CFRA/PDL leave</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- San Francisco -->
-        <div class="state-card">
-          <div class="state-card-header" style="background: var(--orange-bg); color: var(--orange);">
-            🌉 San Francisco (PPLO)
-          </div>
-          <div class="state-card-body">
-            <ul>
-              <li><strong>SF Paid Parental Leave Ordinance (PPLO):</strong> Employers with <strong>20+ employees worldwide</strong> must supplement CA PFL</li>
-              <li>Supplement brings total pay to <strong>100% of salary</strong> for up to <strong>8 weeks</strong> of bonding leave</li>
-              <li>2024 weekly cap: <strong>$2,700/week</strong> (based on annual salary of ~$160,538)</li>
-              <li>Applies to employees who work in SF ≥8 hours/week in the 3 months prior to leave</li>
-              <li>Remote employees working exclusively outside SF do <em>not</em> qualify</li>
-              <li>OLSE provides a calculator to determine exact supplement amounts</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- New York -->
-        <div class="state-card">
-          <div class="state-card-header" style="background: var(--green-bg); color: var(--green);">
-            🗽 New York State (PFL)
-          </div>
-          <div class="state-card-body">
-            <ul>
-              <li><strong>NY PFL:</strong> Up to <strong>12 weeks</strong> job-protected paid leave; applies to all employers</li>
-              <li>Wage replacement: <strong>67% of average weekly wage</strong>, capped at 67% of NY SAWW</li>
-              <li>2025 max benefit: <strong>$1,177.32/week</strong> (NYSAWW of $1,757.19)</li>
-              <li>Employee-funded via payroll deduction (2025 rate: 0.388% of gross wages, max $354.53/yr)</li>
-              <li>Eligible after working 20+ hrs/week for 26 consecutive weeks (or 175 days for part-time)</li>
-              <li>Employers must maintain health benefits during leave</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Other States -->
-        <div class="state-card">
-          <div class="state-card-header" style="background: var(--purple-bg); color: var(--purple);">
-            🗺️ Other States with PFL Laws
-          </div>
-          <div class="state-card-body">
-            <ul>
-              <li>All have mandatory paid family leave programs:
-                <span style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">
-                  <a href="https://famli.colorado.gov/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Colorado →</a>
-                  <a href="https://ctpaidleave.org/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Connecticut →</a>
-                  <a href="https://www.mass.gov/info-details/paid-family-and-medical-leave-pfml-overview-and-benefits" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Massachusetts →</a>
-                  <a href="https://www.myleavebenefits.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">New Jersey →</a>
-                  <a href="https://paidleave.oregon.gov/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Oregon →</a>
-                  <a href="https://dlt.ri.gov/individuals/temporary-disability-caregiver-insurance" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Rhode Island →</a>
-                  <a href="https://paidleave.wa.gov/" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">Washington →</a>
-                  <a href="https://does.dc.gov/page/dc-paid-family-leave" target="_blank" style="display:inline-block; padding:3px 10px; background:var(--purple-bg); color:var(--purple); border:1px solid var(--purple); border-radius:12px; font-size:12px; font-weight:500; text-decoration:none;">DC →</a>
-                </span>
-              </li>
-              <li>Benefits vary: typically 60–90% wage replacement for 6–16 weeks</li>
-              <li>Most are employee-funded (or shared employer/employee); cost to employer is coordination, not necessarily cash</li>
-              <li>Remaining 39 states: employer policy is the <em>only</em> paid leave available — set your bar accordingly</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="callout callout-yellow">
-        <span class="callout-icon">⚠️</span>
-        <div>
-          <p><strong>Multi-state complexity:</strong> If you have employees in CA, NY, <em>and</em> Texas, you're managing three different leave regimes simultaneously. Your policy document should clarify that employees will receive the benefit of applicable state law <em>plus</em> any additional company supplement — never less than what the law provides.</p>
-        </div>
-      </div>
-
-      <h3 style="margin-top: 20px;">Quick Comparison: Federal vs. Key States</h3>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Law</th>
-              <th>Employer Threshold</th>
-              <th>Duration</th>
-              <th>Pay</th>
-              <th>Who Funds It</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>FMLA</strong> (Federal)</td>
-              <td>50+ employees</td>
-              <td>12 weeks</td>
-              <td>Unpaid</td>
-              <td>N/A (job protection only)</td>
-            </tr>
-            <tr>
-              <td><strong>CA PDL</strong></td>
-              <td>5+ employees</td>
-              <td>Up to 4 months</td>
-              <td>Unpaid (but employer can require use of PFL/STD)</td>
-              <td>Employer (job protection)</td>
-            </tr>
-            <tr>
-              <td><strong>CA CFRA</strong></td>
-              <td>5+ employees</td>
-              <td>12 weeks</td>
-              <td>Unpaid (runs separately from PDL)</td>
-              <td>Employer (job protection)</td>
-            </tr>
-            <tr>
-              <td><strong>CA PFL / SDI</strong></td>
-              <td>All employers</td>
-              <td>8 weeks bonding</td>
-              <td>~60–70% wages</td>
-              <td>Employee payroll deduction</td>
-            </tr>
-            <tr>
-              <td><strong>SF PPLO</strong></td>
-              <td>20+ employees worldwide</td>
-              <td>8 weeks</td>
-              <td>Supplements PFL to 100%</td>
-              <td>Employer (supplement only)</td>
-            </tr>
-            <tr>
-              <td><strong>NY PFL</strong></td>
-              <td>All employers</td>
-              <td>12 weeks</td>
-              <td>67% wages (max $1,177/wk)</td>
-              <td>Employee payroll deduction</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="callout callout-yellow">
+      <span class="callout-icon">⚠️</span>
+      <div><strong>Multi-state employers:</strong> If you have employees in multiple states, you need to track each state's obligations separately. An employee working remotely from WA has different entitlements than one in TX. Consider a leave administration vendor to manage this complexity.</div>
     </div>
 
-    <div class="divider"></div>
+    <h3>State Law Quick Comparison</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>State</th>
+            <th>Program</th>
+            <th>Max Duration</th>
+            <th>Wage Replacement</th>
+            <th>Who Pays</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>California</strong></td>
+            <td>CA PFL / SDI</td>
+            <td>8 wks bonding + disability</td>
+            <td>60–70% (up to ~$1,620/wk)</td>
+            <td>Employee payroll deduction</td>
+          </tr>
+          <tr>
+            <td><strong>New York</strong></td>
+            <td>NY PFL</td>
+            <td>12 weeks</td>
+            <td>67% (up to $1,177/wk)</td>
+            <td>Employee payroll deduction</td>
+          </tr>
+          <tr>
+            <td><strong>Washington</strong></td>
+            <td>WA PFML</td>
+            <td>12–16 weeks</td>
+            <td>Up to 90% (low earners)</td>
+            <td>Shared employer/employee</td>
+          </tr>
+          <tr>
+            <td><strong>Colorado</strong></td>
+            <td>FAMLI</td>
+            <td>12 weeks</td>
+            <td>Up to 90%</td>
+            <td>Shared employer/employee</td>
+          </tr>
+          <tr>
+            <td><strong>Oregon</strong></td>
+            <td>Paid Leave Oregon</td>
+            <td>12–14 weeks</td>
+            <td>Up to 100% (low earners)</td>
+            <td>Shared employer/employee</td>
+          </tr>
+          <tr>
+            <td><strong>No state law</strong></td>
+            <td>—</td>
+            <td>0 (employer only)</td>
+            <td>Employer discretion</td>
+            <td>Employer</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- ── SECTION 5: STD ─────────────────────────────────── -->
-    <div class="section" id="std">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--teal-bg);">🏥</div>
-        <h2>Short-Term Disability (STD) &amp; How to Use It</h2>
-      </div>
+  <!-- ══ 4. STD INSURANCE ══ -->
+  <section class="section" id="std">
+    <h2>🛡️ Short-Term Disability (STD) Insurance</h2>
 
-      <p>Short-term disability is one of the most underutilized tools in building a cost-effective parental leave policy — but it's also one of the most misunderstood. Here's exactly how it works.</p>
+    <p>STD insurance is the most cost-effective tool for funding parental leave at smaller companies. It pays a portion of salary during the medical recovery period — typically the first 6–8 weeks after birth for the birthing parent.</p>
 
-      <div class="callout callout-blue">
-        <span class="callout-icon">📌</span>
-        <div>
-          <p><strong>Critical distinction:</strong> STD covers the <em>birth parent's medical recovery</em> from childbirth — not bonding leave. Non-birthing parents and adoptive parents cannot use STD for leave. It covers roughly the first 6–8 weeks post-birth (longer for C-sections). Bonding leave must be funded separately by the employer or through state PFL programs.</p>
-        </div>
-      </div>
+    <div class="callout callout-blue">
+      <span class="callout-icon">💡</span>
+      <div><strong>How it works:</strong> The employer purchases a group STD policy. When an employee gives birth, the insurer pays out (typically 60–70% of salary). The employer can then top up to 100% at a much lower cost than funding the full leave themselves.</div>
+    </div>
 
-      <h3>How STD Works in a Leave Stack</h3>
-      <div class="std-timeline">
-        <div class="bar-label">Example: Birthing parent, California employer, 16-week policy</div>
+    <h3>How Leave Stacks: CA, SF & NY Examples</h3>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">Approximate illustration — actual durations vary by policy and employee eligibility.</p>
+
+    <div class="std-chart">
+      <!-- CA Row -->
+      <div class="std-row-wrap">
+        <div class="std-row-label">California (CA)</div>
         <div class="std-bar-row">
-          <div class="std-bar" style="flex: 2; background: #C83532;">STD Recovery<br/>6–8 wks</div>
-          <div class="std-bar" style="flex: 2; background: #2F80ED;">CA PFL Bonding<br/>8 wks</div>
-          <div class="std-bar" style="flex: 1; background: #448361;">Employer +2 wks</div>
+          <div class="std-bar" style="flex: 2; background: #C83532;">STD · 6–8 wks</div>
+          <div class="std-bar" style="flex: 2; background: #2F80ED;">CA PFL · 8 wks</div>
+          <div class="std-bar" style="flex: 1; background: #448361;">Employer +wks</div>
         </div>
-        <div class="bar-label" style="margin-top: 12px;">Example: Birthing parent, San Francisco employer (20+ employees), 16-week policy</div>
+      </div>
+
+      <!-- SF Row -->
+      <div class="std-row-wrap">
+        <div class="std-row-label">San Francisco (SF PPLO)</div>
         <div class="std-bar-row">
           <div class="std-bar" style="flex: 2; background: #C83532;">STD · 6–8 wks</div>
           <div class="std-bar" style="flex: 2; background: #2F80ED;">CA PFL · 8 wks</div>
           <div class="std-bar" style="flex: 0.8; background: #D9730D;">PPLO top-up</div>
           <div class="std-bar" style="flex: 0.8; background: #448361;">Employer +wks</div>
         </div>
-        <p style="font-size: 11.5px; color: var(--text-muted); margin: 0 0 8px; font-style: italic;">↑ SF PPLO runs concurrently with CA PFL, supplementing it to 100% of salary (up to $2,700/wk cap). The employer's additional weeks beyond PFL are funded directly.</p>
-        <div class="bar-label" style="margin-top: 12px;">Example: Non-birthing parent, NY employer, 12-week policy</div>
+        <p style="font-size: 11.5px; color: var(--text-muted); margin: 5px 0 0; font-style: italic;">↑ SF PPLO runs concurrently with CA PFL, supplementing it to 100% of salary (up to $2,700/wk cap).</p>
+      </div>
+
+      <!-- NY Row -->
+      <div class="std-row-wrap">
+        <div class="std-row-label">New York (NY)</div>
         <div class="std-bar-row">
-          <div class="std-bar" style="flex: 3; background: #2F80ED;">NY PFL Bonding · 12 wks · 67% wages</div>
-          <div class="std-bar" style="flex: 1.5; background: #448361;">Employer top-up to 100% · 12 wks</div>
-        </div>
-        <div class="std-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#C83532;"></div>STD (medical disability)</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#2F80ED;"></div>State PFL (wage replacement)</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#D9730D;"></div>SF PPLO (mandatory employer supplement to 100%)</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#448361;"></div>Employer supplement/top-up</div>
+          <div class="std-bar" style="flex: 1.5; background: #C83532;">STD · 6 wks</div>
+          <div class="std-bar" style="flex: 3; background: #6940A5;">NY PFL · 12 wks</div>
+          <div class="std-bar" style="flex: 1; background: #448361;">Employer +wks</div>
         </div>
       </div>
 
-      <h3 style="margin-top: 20px;">Key STD Design Considerations</h3>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Topic</th>
-              <th>What to Know</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Wage replacement rate</strong></td>
-              <td>STD policies typically pay 50–70% of base salary. Employer top-ups bring this to 100% — Sequoia data shows 74% of SMBs use this model.</td>
-            </tr>
-            <tr>
-              <td><strong>Duration</strong></td>
-              <td>Standard vaginal birth: 6 weeks. C-section: 8 weeks. Complications may extend further with medical documentation.</td>
-            </tr>
-            <tr>
-              <td><strong>Enrollment timing</strong></td>
-              <td>Employees must be enrolled in STD before pregnancy. Many voluntary plans have pre-existing condition exclusions — communicate this clearly during onboarding.</td>
-            </tr>
-            <tr>
-              <td><strong>Interaction with state PFL</strong></td>
-              <td>In CA and NY, employees generally cannot collect STD and state PFL at the same time. STD covers the disability period; PFL begins for bonding after recovery.</td>
-            </tr>
-            <tr>
-              <td><strong>71% policy cliff</strong></td>
-              <td>Sequoia 2025 found that 71% of SMBs stop paid leave once STD coverage ends. This means non-birthing parents and adoptive parents often get no paid leave at all. Consider explicitly funding bonding leave separately.</td>
-            </tr>
-            <tr>
-              <td><strong>Carrier coordination</strong></td>
-              <td>Work with your broker to ensure your STD carrier and state PFL claims are properly coordinated. Poor coordination causes payment gaps and employee confusion.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="callout callout-orange">
-        <span class="callout-icon">💡</span>
-        <div>
-          <p><strong>Pro tip:</strong> Fully-insured group STD plans typically cost employers $2–$5 per employee per month. For a 50-person company, that's ~$1,200–$3,000/year in premium — and it offloads the financial risk of leave events to an insurance carrier.</p>
-        </div>
+      <div class="std-legend">
+        <div class="std-legend-item"><div class="std-legend-dot" style="background:#C83532;"></div> STD (Short-Term Disability)</div>
+        <div class="std-legend-item"><div class="std-legend-dot" style="background:#2F80ED;"></div> CA PFL (state-paid bonding)</div>
+        <div class="std-legend-item"><div class="std-legend-dot" style="background:#6940A5;"></div> NY PFL (state-paid bonding)</div>
+        <div class="std-legend-item"><div class="std-legend-dot" style="background:#D9730D;"></div> SF PPLO top-up (employer-funded)</div>
+        <div class="std-legend-item"><div class="std-legend-dot" style="background:#448361;"></div> Employer additional weeks</div>
       </div>
     </div>
 
-    <div class="divider"></div>
+    <h3>STD Design Considerations</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Decision</th><th>Options</th><th>Recommendation</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Who pays the premium?</td>
+            <td>Employer-paid, employee-paid, or split</td>
+            <td>Employer-paid is a stronger benefit; employee-paid is tax-advantaged for employee</td>
+          </tr>
+          <tr>
+            <td>Elimination period</td>
+            <td>0, 7, or 14 days before benefits start</td>
+            <td>7-day is standard; 0-day costs more but is better for employees</td>
+          </tr>
+          <tr>
+            <td>Benefit amount</td>
+            <td>50%, 60%, or 70% of salary</td>
+            <td>60–70% is typical; pair with employer top-up to reach 100%</td>
+          </tr>
+          <tr>
+            <td>Duration</td>
+            <td>6, 8, 12, or 26 weeks</td>
+            <td>Align with your parental leave policy length for birthing parents</td>
+          </tr>
+          <tr>
+            <td>Non-birthing parent</td>
+            <td>STD does not apply</td>
+            <td>Must be funded via employer policy or state PFL only</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 
-    <!-- ── SECTION 6: Job Protection ─────────────────────── -->
-    <div class="section" id="job-protection">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--red-bg);">🔒</div>
-        <h2>Job Protections During Leave</h2>
-      </div>
+  <!-- ══ 5. JOB PROTECTIONS ══ -->
+  <section class="section" id="protections">
+    <h2>⚖️ Job Protections</h2>
 
-      <p>Paying for leave and protecting someone's job are two separate obligations. Here's what employees are entitled to — and what your policy should explicitly guarantee.</p>
-
-      <div class="callout callout-red">
-        <span class="callout-icon">⚠️</span>
-        <div>
-          <p><strong>Common mistake:</strong> Many employers assume FMLA provides job protection for everyone. It only applies to employers with <strong>50+ employees</strong>. Companies under that threshold have limited federal protection obligations — but state laws (like CFRA in CA for 5+ employees) may fill the gap. Know your threshold.</p>
-        </div>
-      </div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Protection</th>
-              <th>Coverage</th>
-              <th>What It Guarantees</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>FMLA</strong></td>
-              <td>Employers with 50+ employees (12 months tenure, 1,250 hrs worked)</td>
-              <td>12 weeks unpaid leave; return to same or equivalent position; continued health benefits</td>
-            </tr>
-            <tr>
-              <td><strong>CA CFRA</strong></td>
-              <td>Employers with 5+ employees in CA</td>
-              <td>12 weeks job-protected leave; return to same position; maintained health benefits</td>
-            </tr>
-            <tr>
-              <td><strong>CA PDL</strong></td>
-              <td>Employers with 5+ employees in CA</td>
-              <td>Up to 4 months job-protected pregnancy disability leave</td>
-            </tr>
-            <tr>
-              <td><strong>NY PFL</strong></td>
-              <td>All NY employers</td>
-              <td>12 weeks job-protected; return to same/comparable role; continued health benefits</td>
-            </tr>
-            <tr>
-              <td><strong>Pregnancy Discrimination Act</strong></td>
-              <td>Federal, 15+ employees</td>
-              <td>Prohibits discrimination based on pregnancy, childbirth, or related conditions</td>
-            </tr>
-            <tr>
-              <td><strong>PUMP Act (2022)</strong></td>
-              <td>Federal, most employers</td>
-              <td>Reasonable break time and private space for nursing for up to 1 year post-birth</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3 style="margin-top: 20px;">Best Practices Beyond Legal Minimums</h3>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-title">Guarantee return to the same role</div>
-          <div class="step-body">Even where law allows returning to an "equivalent" position, explicitly guarantee the same role in your policy. It prevents ambiguity and builds trust.</div>
-        </div>
-        <div class="step">
-          <div class="step-title">Maintain all benefits during leave</div>
-          <div class="step-body">Ensure health insurance, equity vesting, and 401(k) contributions continue uninterrupted. Stopping equity vesting during leave is a legal gray area in some states and always bad for morale.</div>
-        </div>
-        <div class="step">
-          <div class="step-title">Anti-retaliation protections</div>
-          <div class="step-body">State explicitly that taking leave will not negatively affect performance reviews, promotion decisions, or compensation. Document this and train managers.</div>
-        </div>
-        <div class="step">
-          <div class="step-title">No-contact norms during leave</div>
-          <div class="step-body">Establish a clear policy on work-related contact during leave (e.g., employee-initiated only). Many companies allow optional "keeping in touch" days (KIT days).</div>
-        </div>
-        <div class="step">
-          <div class="step-title">Gradual return-to-work option</div>
-          <div class="step-body">Consider offering a phased return (e.g., 50% schedule for 2–4 weeks) as an optional bridge. This is not legally required but dramatically improves utilization and retention.</div>
-        </div>
-      </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Law</th>
+            <th>Who It Covers</th>
+            <th>What It Requires</th>
+            <th>Key Threshold</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>FMLA</strong></td>
+            <td>Employees at 50+ employee companies, 12+ months tenure</td>
+            <td>12 weeks unpaid, job-protected leave</td>
+            <td>50+ employees within 75 miles</td>
+          </tr>
+          <tr>
+            <td><strong>CFRA (CA)</strong></td>
+            <td>CA employees at 5+ employee companies</td>
+            <td>12 weeks unpaid, job-protected leave (separate from PDL)</td>
+            <td>5+ employees in CA</td>
+          </tr>
+          <tr>
+            <td><strong>CA PDL</strong></td>
+            <td>Pregnant employees in CA</td>
+            <td>Up to 4 months job-protected pregnancy disability leave</td>
+            <td>5+ employees in CA</td>
+          </tr>
+          <tr>
+            <td><strong>NY FMLA equivalent</strong></td>
+            <td>All NY employers</td>
+            <td>Job protection during NY PFL leave</td>
+            <td>All employers</td>
+          </tr>
+          <tr>
+            <td><strong>ADA / PWFA</strong></td>
+            <td>15+ employee companies</td>
+            <td>Reasonable accommodations for pregnancy-related conditions</td>
+            <td>15+ employees</td>
+          </tr>
+          <tr>
+            <td><strong>PDA</strong></td>
+            <td>15+ employee companies</td>
+            <td>No discrimination based on pregnancy, childbirth, or related conditions</td>
+            <td>15+ employees</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="divider"></div>
+    <div class="callout callout-green">
+      <span class="callout-icon">✅</span>
+      <div><strong>Best practices beyond legal minimums:</strong> Confirm job protection in writing before leave begins. Maintain health insurance at the same cost during leave. Avoid restructuring the employee's role while on leave. Have a documented return-to-work conversation before the employee comes back.</div>
+    </div>
+  </section>
 
-    <!-- ── SECTION 7: SF Compliance Steps ────────────────── -->
-    <div class="section" id="sf-compliance">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--green-bg);">✅</div>
-        <h2>Compliance Steps: Example Using San Francisco</h2>
-      </div>
+  <!-- ══ 6. SF COMPLIANCE ══ -->
+  <section class="section" id="compliance">
+    <h2>✅ SF PPLO Compliance Steps</h2>
+    <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:20px;">If you have 20+ employees and anyone working in San Francisco, the SF Paid Parental Leave Ordinance applies. Here's what you need to do.</p>
 
-      <p>San Francisco is a useful model because it stacks <em>three</em> overlapping regimes: federal FMLA, California state law (CFRA + PDL + PFL/SDI), and the SF Paid Parental Leave Ordinance (PPLO). Here's how to administer leave correctly for an SF-based employee.</p>
+    <div class="steps">
 
-      <div class="callout callout-blue">
-        <span class="callout-icon">📍</span>
-        <div>
-          <p><strong>Scenario:</strong> An employee working in San Francisco for an employer with 25+ employees has a baby. Here's the compliance checklist for HR.</p>
-        </div>
-      </div>
-
-      <div class="steps">
-        <div class="step">
-          <div class="step-title">
-            Step 1: Notify employee of all applicable rights
-            <span class="tag tag-blue" style="margin-left: 8px; font-weight: 500;">Employer</span>
-          </div>
-          <div class="step-body">Provide written notice of FMLA rights (if 50+ employees), CFRA rights, CA PDL rights, CA PFL/SDI information, and SF PPLO information within 5 days of learning of a qualifying event. Post required notices in the workplace.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://www.dol.gov/agencies/whd/fmla/notices" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ DOL FMLA Notice Templates</a>
-              <a href="https://calcivilrights.ca.gov/cfra/" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ CA CFRA Rights (CRD)</a>
-              <a href="https://www.sf.gov/information--paid-parental-leave-ordinance" target="_blank" style="font-size:12px; color: var(--orange); text-decoration:none; background: var(--orange-bg); padding: 2px 8px; border-radius: 4px;">→ SF PPLO Notice (OLSE)</a>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-title">
-            Step 2: Determine leave type and duration
-            <span class="tag tag-blue" style="margin-left: 8px; font-weight: 500;">Employer (HR)</span>
-          </div>
-          <div class="step-body">For a birthing parent: PDL runs first (up to 4 months), then CFRA bonding leave begins (12 weeks) — these do not run concurrently in CA. For a non-birthing parent: CFRA bonding only (12 weeks). Designate the leave in writing within 5 business days.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://calcivilrights.ca.gov/wp-content/uploads/sites/32/2023/03/CFRA-Poster_ENG.pdf" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ CA CFRA Leave Designation Form</a>
-              <a href="https://www.dol.gov/agencies/whd/fmla/forms" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ DOL FMLA Designation Forms</a>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-title">
-            Step 3: File CA PFL / SDI claim
-            <span class="tag tag-green" style="margin-left: 8px; font-weight: 500;">Employee</span>
-            <span style="font-size:11.5px; color: var(--text-muted); margin-left: 6px;">+ Employer provides pamphlet</span>
-          </div>
-          <div class="step-body">The employee files directly with California EDD for PFL wage replacement (up to 8 weeks bonding at ~60–70% wages). This is funded by employee SDI payroll deductions — not employer cash. The employer's role is to hand the employee the required DE 2511 pamphlet and ensure they know to file.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://edd.ca.gov/en/disability/paid_family_leave/" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ File CA PFL Claim (EDD)</a>
-              <a href="https://edd.ca.gov/siteassets/files/pdf_pub_ctr/de2511.pdf" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ DE 2511 Pamphlet (required handout)</a>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-title">
-            Step 4: Calculate and pay SF PPLO supplement
-            <span class="tag tag-blue" style="margin-left: 8px; font-weight: 500;">Employer</span>
-          </div>
-          <div class="step-body">Using the OLSE calculator, determine the weekly supplement needed to bring total pay to 100% of salary, up to the $2,700/week cap. Pay this concurrently with CA PFL for up to 8 weeks of bonding leave. Applies to employees who worked ≥8 hrs/week in SF in the prior 3 months. Keep payroll records for potential OLSE audit.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://www.sf.gov/information--paid-parental-leave-ordinance" target="_blank" style="font-size:12px; color: var(--orange); text-decoration:none; background: var(--orange-bg); padding: 2px 8px; border-radius: 4px;">→ SF OLSE PPLO Calculator &amp; Guidance</a>
-              <a href="https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_laboremployment/0-0-0-596" target="_blank" style="font-size:12px; color: var(--orange); text-decoration:none; background: var(--orange-bg); padding: 2px 8px; border-radius: 4px;">→ SF PPLO Ordinance Text</a>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-title">
-            Step 5: File STD claim (if applicable)
-            <span class="tag tag-green" style="margin-left: 8px; font-weight: 500;">Employee files</span>
-            <span style="font-size:11.5px; color: var(--text-muted); margin-left: 6px;">+ Employer coordinates with carrier</span>
-          </div>
-          <div class="step-body">For birthing parents, the employee files an STD claim with your group carrier for medical disability (6–8 weeks). The employer's role is to coordinate timing so STD and CA PFL/SDI do not overlap — STD runs first (recovery), then PFL begins for bonding. Notify your STD carrier that the employee is also eligible for state PFL to avoid double-payment issues.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://edd.ca.gov/en/disability/State_disability_insurance/" target="_blank" style="font-size:12px; color: var(--teal); text-decoration:none; background: var(--teal-bg); padding: 2px 8px; border-radius: 4px;">→ CA SDI Overview (EDD)</a>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-title">
-            Step 6: Maintain benefits and document
-            <span class="tag tag-blue" style="margin-left: 8px; font-weight: 500;">Employer</span>
-          </div>
-          <div class="step-body">Continue employer-paid health insurance premiums throughout all protected leave. If the employee does not return after leave, you may recoup premium costs under FMLA/CFRA provisions. Maintain all leave documentation for at least 3 years (CA requirement). Document dates, leave type, notices provided, and PPLO supplement payments.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://www.dol.gov/agencies/whd/fmla/employer-guide" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ DOL Employer's Guide to FMLA</a>
-              <a href="https://calcivilrights.ca.gov/cfra/" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ CA CFRA Record-Keeping Requirements</a>
-            </div>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-title">
-            Step 7: Manage return to work
-            <span class="tag tag-purple" style="margin-left: 8px; font-weight: 500;">Both</span>
-          </div>
-          <div class="step-body">Employer: restore the employee to the same or equivalent position (same pay, benefits, seniority). In CA, the same position must be restored after PDL; equivalent is acceptable after CFRA. Conduct a re-onboarding check-in, communicate team or project changes, and honor any phased return arrangement. Employee: provide reasonable advance notice of return date where possible.
-            <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px;">
-              <a href="https://calcivilrights.ca.gov/cfra/" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ CA Reinstatement Rights (CRD)</a>
-              <a href="https://www.dol.gov/agencies/whd/fmla/faq#14" target="_blank" style="font-size:12px; color: var(--blue); text-decoration:none; background: var(--blue-bg); padding: 2px 8px; border-radius: 4px;">→ FMLA Return-to-Work FAQ (DOL)</a>
-            </div>
-          </div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <span class="owner-badge owner-employer">Employer</span>
+          <strong>Confirm you're covered</strong>
+          You're covered if you have 20+ employees worldwide and at least one employee regularly working in SF. Part-time and temporary workers count.
+          <br/>
+          <a href="https://sf.gov/information/paid-parental-leave-ordinance" target="_blank" class="link-pill" style="color: var(--blue);">SF PPLO Overview →</a>
         </div>
       </div>
 
-      <div class="callout callout-green">
-        <span class="callout-icon">🛠️</span>
-        <div>
-          <p><strong>Tools to simplify administration:</strong> Leave management platforms like <strong>Cocoon</strong>, <strong>Sparrow</strong>, and <strong>Tilt</strong> automate state claim coordination, calculate supplements, and generate compliance documentation. For companies with frequent leave events (10+ per year), these tools typically pay for themselves in HR time saved.</p>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <span class="owner-badge owner-employer">Employer</span>
+          <strong>Update your leave policy</strong>
+          Your written policy must reflect the PPLO requirement: supplementing CA PFL to 100% of salary (up to $2,700/wk) for up to 8 weeks of bonding leave.
+          <br/>
+          <a href="https://sfgov.org/olse/paid-parental-leave-ordinance" target="_blank" class="link-pill" style="color: var(--blue);">OLSE PPLO Page →</a>
         </div>
       </div>
 
-      <div class="callout callout-yellow">
-        <span class="callout-icon">📋</span>
-        <div>
-          <p><strong>SF PPLO Compliance Checklist:</strong> Post SF PPLO notice in the workplace · Identify employees who qualify (work in SF ≥8 hrs/week) · Calculate supplement using OLSE calculator · Pay supplement concurrently with CA PFL · Maintain payroll records · Respond to employee or OLSE inquiries within required timeframes.</p>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <span class="owner-badge owner-employer">Employer</span>
+          <strong>Post required notices</strong>
+          Display the official SF PPLO notice in your SF workplace (or send electronically if remote). Available in multiple languages from the SF OLSE.
+          <br/>
+          <a href="https://sfgov.org/olse/sites/default/files/Document/Paid%20Parental%20Leave%20Poster%20English%2017.pdf" target="_blank" class="link-pill" style="color: var(--blue);">Download Notice (PDF) →</a>
         </div>
       </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <span class="owner-badge owner-employee">Employee</span>
+          <strong>Employee files for CA PFL</strong>
+          The employee applies for CA PFL (bonding) through the CA EDD. This is the employee's responsibility — HR should provide guidance and the EDD link.
+          <br/>
+          <a href="https://edd.ca.gov/en/disability/paid-family-leave/" target="_blank" class="link-pill" style="color: var(--green);">CA EDD PFL →</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <span class="owner-badge owner-both">Both</span>
+          <strong>Coordinate the top-up payment</strong>
+          Once the employee's CA PFL award letter arrives, calculate the employer top-up: (weekly salary − CA PFL benefit), capped at $2,700/wk. Pay via normal payroll.
+          <br/>
+          <a href="https://sfgov.org/olse/paid-parental-leave-ordinance" target="_blank" class="link-pill" style="color: var(--purple);">PPLO Calculation Guide →</a>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <span class="owner-badge owner-employer">Employer</span>
+          <strong>Maintain health benefits</strong>
+          Continue contributing to the employee's health insurance at the same rate during the PPLO period. Discontinuing coverage may violate CFRA/FMLA as well.
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">7</div>
+        <div class="step-content">
+          <span class="owner-badge owner-employer">Employer</span>
+          <strong>Keep records</strong>
+          Maintain records of PPLO payments for at least 3 years. SF OLSE may audit compliance. Document the employee's CA PFL award amount and your corresponding top-up calculation.
+          <br/>
+          <a href="https://sfgov.org/olse" target="_blank" class="link-pill" style="color: var(--blue);">SF OLSE →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ 7. SOURCES ══ -->
+  <section class="section" id="sources">
+    <h2>📚 Sources & Further Reading</h2>
+
+    <div class="table-wrap">
+      <table class="sources-table">
+        <thead>
+          <tr><th>Source</th><th>What It Covers</th><th>Link</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cocoon 2023 State of Parental Leave</td>
+            <td>VC-backed company benchmarks, stage-based data, trends</td>
+            <td><a href="https://www.cocoon.com/resources/state-of-parental-leave" target="_blank" style="color:var(--blue);">cocoon.com →</a></td>
+          </tr>
+          <tr>
+            <td>Sequoia SMB Benefits Survey 2025</td>
+            <td>Broad market SMB leave benchmarks across company sizes</td>
+            <td><a href="https://www.sequoiacap.com/article/benefits-survey/" target="_blank" style="color:var(--blue);">sequoiacap.com →</a></td>
+          </tr>
+          <tr>
+            <td>theSkimm #ShowUsYourLeave</td>
+            <td>Employee experience, policy vs. culture gaps, take-up rates</td>
+            <td><a href="https://www.theskimm.com/show-us-your-leave" target="_blank" style="color:var(--blue);">theskimm.com →</a></td>
+          </tr>
+          <tr>
+            <td>Bnchmrk</td>
+            <td>Real-time tech company leave benchmarking tool</td>
+            <td><a href="https://bnchmrk.com" target="_blank" style="color:var(--blue);">bnchmrk.com →</a></td>
+          </tr>
+          <tr>
+            <td>SF OLSE — PPLO</td>
+            <td>Official SF Paid Parental Leave Ordinance guidance</td>
+            <td><a href="https://sfgov.org/olse/paid-parental-leave-ordinance" target="_blank" style="color:var(--blue);">sfgov.org →</a></td>
+          </tr>
+          <tr>
+            <td>CA EDD — PFL</td>
+            <td>CA Paid Family Leave claims, eligibility, benefit amounts</td>
+            <td><a href="https://edd.ca.gov/en/disability/paid-family-leave/" target="_blank" style="color:var(--blue);">edd.ca.gov →</a></td>
+          </tr>
+          <tr>
+            <td>NY PFL Official Site</td>
+            <td>NY Paid Family Leave rates, eligibility, employer obligations</td>
+            <td><a href="https://paidfamilyleave.ny.gov/" target="_blank" style="color:var(--blue);">paidfamilyleave.ny.gov →</a></td>
+          </tr>
+          <tr>
+            <td>DOL — FMLA</td>
+            <td>Federal FMLA compliance, employer obligations, posters</td>
+            <td><a href="https://www.dol.gov/agencies/whd/fmla" target="_blank" style="color:var(--blue);">dol.gov →</a></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="divider"></div>
+    <p style="font-size:12px; color:var(--text-muted); margin-top:16px;">This guide is for informational purposes only and does not constitute legal advice. Consult employment counsel for guidance specific to your company's situation.</p>
+  </section>
 
-    <!-- ── Sources ──────────────────────────────────────── -->
-    <div class="section" id="sources">
-      <div class="section-header">
-        <div class="section-icon" style="background: var(--bg-warm);">🔗</div>
-        <h2>Sources &amp; Further Reading</h2>
-      </div>
+</main>
 
-      <p>All data points in this guide are sourced from publicly available research and government resources. Links are provided for verification and further reading.</p>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Source</th>
-              <th>What It Covers</th>
-              <th>Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Cocoon Paid Leave Benchmarks</strong></td>
-              <td>250+ VC-backed companies; birthing/non-birthing parent weeks; trends since 2021</td>
-              <td><a href="https://www.cocoon.com/blog/paid-leave-benchmarks-2024" target="_blank" style="color: var(--blue);">cocoon.com/blog/paid-leave-benchmarks-2024</a></td>
-            </tr>
-            <tr>
-              <td><strong>Sequoia SMB Benefits Report 2025</strong></td>
-              <td>STD usage, full employer-paid leave rates, SMB benchmarking</td>
-              <td><a href="https://www.sequoia.com/2025/06/benefits-benchmarks-smb-2025/" target="_blank" style="color: var(--blue);">sequoia.com/2025/06/benefits-benchmarks-smb-2025</a></td>
-            </tr>
-            <tr>
-              <td><strong>theSkimm #ShowUsYourLeave</strong></td>
-              <td>Crowdsourced database of 500+ US employers; 47% offer equal maternity/paternity; sector breakdowns (Healthcare 63%, Nonprofit 51%, Retail 41% offering equal leave). Collected Q1 2025 via voluntary employee submissions.</td>
-              <td><a href="https://www.theskimm.com/press/theskimms-showusyourleave-launches-public-database-of-paid-leave-policies" target="_blank" style="color: var(--blue);">theskimm.com/press/showusyourleave</a></td>
-            </tr>
-            <tr>
-              <td><strong>SF PPLO – SF.gov</strong></td>
-              <td>Official SF Paid Parental Leave Ordinance text and compliance resources</td>
-              <td><a href="https://www.sf.gov/information--paid-parental-leave-ordinance" target="_blank" style="color: var(--blue);">sf.gov/information--paid-parental-leave-ordinance</a></td>
-            </tr>
-            <tr>
-              <td><strong>NY PFL – paidfamilyleave.ny.gov</strong></td>
-              <td>NY 2025 rates, benefits, eligibility, employer responsibilities</td>
-              <td><a href="https://paidfamilyleave.ny.gov/2025" target="_blank" style="color: var(--blue);">paidfamilyleave.ny.gov/2025</a></td>
-            </tr>
-            <tr>
-              <td><strong>CA CFRA – CalChamber</strong></td>
-              <td>CFRA/PDL overview, employer thresholds, interaction with FMLA</td>
-              <td><a href="https://www.calchamber.com/california-labor-law/fmla-cfra-overview" target="_blank" style="color: var(--blue);">calchamber.com/california-labor-law/fmla-cfra-overview</a></td>
-            </tr>
-            <tr>
-              <td><strong>OpenView Partners</strong></td>
-              <td>Early-stage startup parental leave averages; small company affordability</td>
-              <td><a href="https://openviewpartners.com/blog/how-early-stage-startups-can-offer-generous-parental-leave/" target="_blank" style="color: var(--blue);">openviewpartners.com/blog</a></td>
-            </tr>
-            <tr>
-              <td><strong>Bnchmrk PTO Data</strong></td>
-              <td>600+ employer cross-industry median leave weeks</td>
-              <td><a href="https://www.bnchmrk.com/pto-benchmarks" target="_blank" style="color: var(--blue);">bnchmrk.com/pto-benchmarks</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- FOOTER -->
-    <div class="footer">
-      <p>This guide was compiled using publicly available research and government sources as of March 2026. It is intended for informational purposes and does not constitute legal advice. Parental leave laws change frequently — always confirm current requirements with a qualified employment attorney or HR consultant for your specific jurisdiction.</p>
-    </div>
-
-  </main>
-</div>
-
-<!-- Active sidebar link highlighting -->
 <script>
+  // Active sidebar link on scroll
   const sections = document.querySelectorAll('.section');
   const links = document.querySelectorAll('.sidebar a');
 
@@ -1366,8 +1035,7 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         links.forEach(l => l.classList.remove('active'));
-        const id = entry.target.id;
-        const active = document.querySelector(`.sidebar a[href="#${id}"]`);
+        const active = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
         if (active) active.classList.add('active');
       }
     });
@@ -1375,6 +1043,5 @@
 
   sections.forEach(s => observer.observe(s));
 </script>
-
 </body>
 </html>
